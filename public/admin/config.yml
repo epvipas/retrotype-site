@@ -1,0 +1,79 @@
+# ===========================================================================
+# Decap CMS configuration for Retrotype.co.uk
+# ---------------------------------------------------------------------------
+# Auth: Netlify Identity + Git Gateway (free).
+#   1. In Netlify dashboard: Site settings → Identity → enable.
+#   2. Identity → Registration → set to "Invite only".
+#   3. Identity → Services → Git Gateway → enable.
+#   4. Invite the owner via email — they sign in at /admin.
+# ===========================================================================
+
+backend:
+  name: git-gateway
+  branch: main
+
+# Where uploaded images go (relative to the repo root)
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+site_url: https://retrotype.co.uk
+display_url: https://retrotype.co.uk
+logo_url: https://retrotype.co.uk/favicon.svg
+
+collections:
+  - name: "content"
+    label: "Site content"
+    files:
+
+      # ---------- A–Z archive ----------
+      - name: "archive"
+        label: "A–Z Archive (restored machines)"
+        file: "src/data/archive.json"
+        format: "json"
+        editor:
+          preview: false
+        fields:
+          - label: "Machines"
+            name: "machines"
+            widget: "list"
+            summary: "{{fields.name}} {{fields.serial}}"
+            fields:
+              - { label: "Name",          name: "name",        widget: "string" }
+              - { label: "Serial number", name: "serial",      widget: "string", required: false }
+              - { label: "Image filename",name: "image",       widget: "string", hint: "Filename in /public/images/archive/" }
+              - { label: "Description",   name: "description", widget: "text" }
+
+      # ---------- Stock for sale ----------
+      - name: "stock"
+        label: "Stock for sale (Etsy)"
+        file: "src/data/stock.json"
+        format: "json"
+        editor:
+          preview: false
+        fields:
+          - label: "Listings"
+            name: "listings"
+            widget: "list"
+            summary: "{{fields.name}} — {{fields.price}}"
+            fields:
+              - { label: "Name",        name: "name",        widget: "string" }
+              - { label: "Price",       name: "price",       widget: "string", hint: "e.g. £198" }
+              - { label: "Image",       name: "image",       widget: "string", hint: "Filename in /public/images/stock/" }
+              - { label: "Etsy URL",    name: "etsy",        widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+
+      # ---------- Manuals ----------
+      - name: "manuals"
+        label: "Owner manuals (PDFs)"
+        file: "src/data/manuals.json"
+        format: "json"
+        editor:
+          preview: false
+        fields:
+          - label: "Manuals"
+            name: "manuals"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Title",        name: "title", widget: "string" }
+              - { label: "PDF filename", name: "file",  widget: "string", hint: "Filename in /public/manuals/" }

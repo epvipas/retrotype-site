@@ -1,0 +1,379 @@
+{
+  "machines": [
+  {
+    "name": "Alder Primus Elite",
+    "serial": "1636863",
+    "image": "IMG_20201026_130312.jpg",
+    "description": "A 60-year-old German machine of quality and substance (8 kg). This Primus has a history — purchased on 7 March 1960 in Stirling, Scotland for £37.16.0 by Miss Booth. The typewriter has been well maintained and is in remarkable condition, having been protected by the lockable case (which has sustained scuffs and scratches)."
+  },
+  {
+    "name": "Alder Tippa",
+    "image": "IMG_20201129_120804.jpeg",
+    "description": "Often overlooked, late Adler typewriters have a quality build inside a lightweight yet strong plastic case. This Tippa model dates from around the mid-1960s and has a sans-serif typeface. Clean, very portable, and a pleasure to use."
+  },
+  {
+    "name": "Alder Tippa S",
+    "serial": "5083317",
+    "image": "IMG_20220104_113907.jpeg",
+    "description": "A treat amongst the late-60s European portables. Very compact, with a quality look and feel — shiny black 'hood', chromed carriage end plates and brushed metal paper feed augment the strong chassis. Serif elite type, ideal for note-taking or a journal on the move."
+  },
+  {
+    "name": "Antares Annabella",
+    "serial": "c-082233",
+    "image": "988d04fa-1ffa-49ad-98cd-343385d49c7e.jpeg",
+    "description": "An Italian beauty from the 1950s, made for the German market — different keys! Complete with original purchase and warranty documents and instructions."
+  },
+  {
+    "name": "Antares Capri",
+    "serial": "R-027912-026",
+    "image": "IMG_20201117_122758.jpeg",
+    "description": "This 'ultra-portable' has typical 70s angular lines in grey/beige plastic. Complete with navy blue vinyl box travel case, this retro machine is ready-to-use and easy to take away. Ideal for a college or university student wanting to express their individuality — printed text without having to rely on technology."
+  },
+  {
+    "name": "Antares Compact",
+    "serial": "c313744-122",
+    "image": "IMG_20201102_123238.jpeg",
+    "description": "Another quality Italian vintage machine. The 'gubbins' of this modernist-style machine are virtually identical to the Antares Annabella, Domus and p59. The Compact has a metal alloy body and strong but light plastic case/cover. Light action and clean typeface."
+  },
+  {
+    "name": "Antares Compact",
+    "serial": "P-315706-6012",
+    "image": "IMG_20211129_111857.jpeg",
+    "description": "I've managed to find another Antares Compact / P59 — I really rate these sleek reliable Italian ultra-portables. This one had been looked after and arrived needing just a strip and clean. Ideal for a writer on the move, or where stowage is tight: the case lid doubles up as a stand."
+  },
+  {
+    "name": "Antares Compact",
+    "serial": "P-315728",
+    "image": "IMG_20210426_131458.jpg",
+    "description": "Yet another super portable from the Italian Antares stable. Very similar to the P59, this one dates from the early 1960s. I really enjoy cleaning and fettling these machines and this one is a beauty."
+  },
+  {
+    "name": "Antares Compact",
+    "serial": "P-3914585",
+    "image": "IMG_20210704_163250~2.jpeg",
+    "description": "Yet another super portable from the Italian Antares stable — very similar to the P59, dating from the early 1960s. This one however had had a tough six decades of service and required considerable deep-cleaning and adjustment before being brought to market."
+  },
+  {
+    "name": "Antares Domus",
+    "image": "IMG_20190903_152329.jpg",
+    "description": "A lovely find — a quality Italian-made portable typewriter with classic mid-century style. A twin brother of the Annabella sold earlier this year, the Domus differed only in having a British QWERTY layout and sporting a shiny black 'bonnet' instead of Annabella's lipstick red."
+  },
+  {
+    "name": "Antares Domus",
+    "serial": "C-092677",
+    "image": "IMG_20211022_121938.jpeg",
+    "description": "After nearly three years I finally tracked down another Antares Domus. A 1961 baby blue machine for fans of mid-century Italian design or vintage office paraphernalia — a super collector's machine. Needed a bit of attention to the ribbon drive mechanism and a thorough de-fluffing but is a delight now."
+  },
+  {
+    "name": "Antares Lisa 30",
+    "serial": "199348",
+    "image": "IMG_20201127_150054.jpeg",
+    "description": "Soooo orange. This LISA 30 is very much a fashion piece, complete with the original denim-look satchel. In great condition, clean and fitted with a new ink ribbon. The workings are that of the sought-after Italian Antares — in this instance no frills, so easy to maintain."
+  },
+  {
+    "name": "Antares Lisa 30",
+    "serial": "467171",
+    "image": "15FC554E-191F-4BE4-B229-0AA8E55785D2_1_105_c.jpeg",
+    "description": "This LISA 30 has a great backstory — arrived with a jammed carriage and various springs/screws/nuts adrift. After carefully removing the carriage I found the escapement gummed up and a clip adrift, and replaced the drawstring after the original snapped. A light-weight yet sturdy machine ideally suited for the writer on the move."
+  },
+  {
+    "name": "Antares Little Star",
+    "serial": "B-026788",
+    "image": "IMG_20210320_145057.jpeg",
+    "description": "The Little Star is an often overlooked gem from the 1950s. A neat ultra-portable design with innovative features such as the Bakelite lid doubling up as a 'dock' to make laptop use more comfortable. This example came with its gubbins covered in 60+ years of detritus; after a thorough deep clean and fettle, Little Star is indeed just so!"
+  },
+  {
+    "name": "Antares Little Star",
+    "serial": "B 030784",
+    "image": "IMG_20210320_145057.jpeg",
+    "description": "Another Little Star — an often overlooked gem from the 1950s. Neat ultra-portable design with the Bakelite lid doubling up as a 'dock' for more comfortable use."
+  },
+  {
+    "name": "Antares p59",
+    "image": "IMG_20191024_163651.jpg",
+    "description": "Another member of the Italian-made Antares stable. The P59 has very much the same mechanism as the Domus and Annabella below; the design is slightly more functional with hard-wearing crinkle paint and a plastic clam case. An ideal gift for mid-century enthusiasts, collectors and budding writers."
+  },
+  {
+    "name": "Bluebird",
+    "serial": "1505065",
+    "image": "4533a026-7688-4a2f-b945-ab6f608edf05.jpg",
+    "description": "Another one for the collectors. This 1950s beauty oozes quality the moment you tap the keys. Manufactured in West Germany and often labelled as 'Torpedo' — described as one of the very best of its era."
+  },
+  {
+    "name": "Brother De Luxe",
+    "serial": "A6126077",
+    "image": "IMG_20211024_133925.jpeg",
+    "description": "As recommended by 'Good Housekeeping' back in the 60s. Made in Nagoya, Japan — the serial number indicates this example left the factory in January 1966. (I wonder if it typed out letters of England's football success!) Needed a fair amount of attention and several parts replaced before adjusting up and lubricating. Looking and working well now."
+  },
+  {
+    "name": "Brother 1600 deLuxe",
+    "serial": "K4170270",
+    "image": "IMG_20210906_130333.jpeg",
+    "description": "Right at the end of the manual typewriter era, Brother finessed their successful full-featured portable. Produced 1974–1984; in some countries badged as Brother JP-5. From the serial number this example dates to October 1984. A good degrease and shift adjustment on the upper case alignment was needed."
+  },
+  {
+    "name": "1968 Commadore portable",
+    "serial": "8-232-488209",
+    "image": "IMG20220728140044.jpeg",
+    "description": "Another relabelled Consul 232, this time in the guise of Commodore. In immaculate condition, complete with cleaning brushes, cloth and owner's manual. On arrival my 35-point checklist found the ribbon vibrator needed forming to prevent smudging; received the usual clean and light lube."
+  },
+  {
+    "name": "Consul 1511",
+    "serial": "X57-13817",
+    "image": "IMG_20210521_131148.jpeg",
+    "description": "What a find — this vintage Czechoslovakian is a delight to type with. I made a New Year resolution not to add to my own personal-use collection, but I'm tempted: this one feels and looks better than my Hermes 2000s. (Once you get the hang of setting the margins!) Augmented instruction manual.pdf available on the blog page. Fledged the nest to Epsom."
+  },
+  {
+    "name": "1962 Consul 232",
+    "serial": "2232141",
+    "image": "IMG_20210411_110859.jpg",
+    "description": "Came out of the Czechoslovakian factory in 1962 — a very stylish but sturdy little machine. I'd love to keep it for my own collection but I have to remain focused on restoring for others to enjoy. Clear serif font with light touch — a great beginner's vintage typewriter."
+  },
+  {
+    "name": "1962 Consul 232",
+    "serial": "2 232 127850",
+    "image": "IMG20230413113638.jpeg",
+    "description": "Another beautiful minimalist 232, manufactured in Czechoslovakia in 1962. The pica typeface provides easily readable text — ideal for comfortable reading of notes, essays, presentations or simply your musings. The case is missing one of the side zippers but the other side and the over-strap secure to allow it to maintain its purpose."
+  },
+  {
+    "name": "1962 Consul 232",
+    "serial": "2232-108366",
+    "image": "IMG_20210430_111328.jpg",
+    "description": "Another gorgeously mid-century-styled typewriter, this one in duck-egg blue. Quite sought after among collectors — in fact I have to discipline myself not to add it to my personal shelf-creaking collection. A PDF of the operating instructions is available to view/download on the Blogs page."
+  },
+  {
+    "name": "1962 Consul 232",
+    "serial": "2232-147259",
+    "image": "IMG_20211113_110144.jpeg",
+    "description": "Another gorgeously mid-century 232, this one in cool grey. Manufactured in 1962 in Brno, Czechoslovakia. Types with a clear pica typeface and has the basic features of an affordable compact machine. Found a new home in South Shields."
+  },
+  {
+    "name": "1960 Consul 311",
+    "serial": "031102240",
+    "image": "IMG_20211113_104833.jpeg",
+    "description": "A superb example of Consul's pretty portable. From its serial number this is a 1960 Consul 311 (looks fairly identical to 232 models). The case is in great external condition and complete with functioning lock and key. PDF of the operating instructions on the Blogs page."
+  },
+  {
+    "name": "1962 Diplomat 232",
+    "serial": "2-124678",
+    "image": "IMG20230112115108.jpeg",
+    "description": "I suspect this excellent machine hasn't seen much action — although 60 years have elapsed since production in Czechoslovakia, this turquoise Diplomat feels almost new. Required minor adjustments to align the upper/lower-case tracking and to give the end-of-line bell its voice again. A previous owner had fitted a bi-chromic ribbon (not required as these models are single-colour). Slightly stylised serif typeface, 10 characters per inch."
+  },
+  {
+    "name": "1964 Diplomat (232)",
+    "serial": "4-232-225049",
+    "image": "IMG20220727144953.jpeg",
+    "description": "Another relabelled Consul 232, this time in the guise of Diplomat. In immaculate condition, complete with cleaning brushes and cloth — the carry-case even has its key. The 35-point checklist found the case-shift alignment needed adjustment, and the usual clean / light lube."
+  },
+  {
+    "name": "Empire Aristocrat",
+    "serial": "S2/218E900",
+    "image": "IMG_20211102_102905.jpeg",
+    "description": "Made by British Typewriter Ltd. in West Bromwich, 1956. Often considered the British version of the well-loved 'Hermes Baby', I feel the robust materials of the body and case of the Aristocrat are a marked improvement on their Swiss counterpart. The carriage lock and folding carriage lever are also improvements."
+  },
+  {
+    "name": "Empire-Corona",
+    "serial": "666232",
+    "image": "IMG_20210922_145857.jpg",
+    "description": "Made in 1963 by SCM. Needed a bit of loving to bring back to good working order. As SCM transitioned to plastic-moulded bodies, this model retained the sturdy pressed-metal finish. PDF of the instruction manual on the info page."
+  },
+  {
+    "name": "Erika Pullman Model 12",
+    "serial": "2082294",
+    "image": "IMG_20220208_103712.jpg",
+    "description": "Probably one of the rarest and most beautiful typewriters I've restored and reluctantly sold on. Slick and quality feel/action — once fettled, 'Erika P', made in 1962 (same year as me), gave me the desire to actually type rather than just bring back to life. Find another one!"
+  },
+  {
+    "name": "HBO Karim",
+    "image": "IMG_20211018_101943.jpeg",
+    "description": "A very orange HBO Karim — I've only seen a couple of these for sale in over three years. They are not listed on the typewriter database so working out a year of manufacture is tricky; I estimate late 70s to early 80s by the mechanism. Several generic components and styling similar to the brand Privileg. The company label shows HBO's address as West Germany; the body is stamped 'Made in Italy'."
+  },
+  {
+    "name": "Hermes Baby — Dutch",
+    "image": "79e94f3f-08bf-4c0a-8266-069c4fa1bff9.jpeg",
+    "description": "Stand out from the rest with this sought-after quality machine. Very tidy and precise, this Baby should continue to provide good service and raise an eyebrow in anyone's study. AZERTY keyboard."
+  },
+  {
+    "name": "Hermes Rocket",
+    "serial": "9502959",
+    "image": "75da3b6c-5328-4562-96dc-5fb5b84575e7.jpg",
+    "description": "A 'modern' (early 1980s) classic in light grey plastic. The Hermes Rocket weighs in at just 3.8 kg — an ideal travelling machine. This one was made in Brazil for the Latin American market. At its heart is the precision Swiss quality Hermes are renowned for."
+  },
+  {
+    "name": "Imperial 200",
+    "serial": "MC 8007550",
+    "image": "IMG_20201128_130736.jpeg",
+    "description": "This Japanese-manufactured Imperial 200 is a popular compact portable from the early 1970s. Made by Silver-Seiko, who offered quality and reliability on a budget. This one has, like many, developed the characteristic random discolouration of the off-white plastic keys."
+  },
+  {
+    "name": "Imperial 220",
+    "serial": "1688538",
+    "image": "IMG_20211018_103619.jpeg",
+    "description": "Another popular 1970s Imperial portable. The 220 is a fine example of Japanese functional simple design. The plastic keys have the characteristic yellowing around the sides — a common issue some might think is nicotine staining or dirt, but apparently is just tarnishing from age."
+  },
+  {
+    "name": "Imperial 230",
+    "serial": "2303315418",
+    "image": "IMG_20210524_115329.jpg",
+    "description": "Japanese-manufactured popular compact portable from the early 1970s. Made by Silver-Seiko, offering quality and reliability on a budget. Featuring TAB, bichromic ribbon selector and touch adjuster, this 230 is a great example in super condition."
+  },
+  {
+    "name": "Maritsa 30",
+    "serial": "80829159",
+    "image": "IMG_20201122_124526.jpeg",
+    "description": "As the electric typewriter became prevalent and the dawn of the word-processor was around the corner, the Bulgarian Typewriter Works in Plovdiv reached out for components from successful Japanese manufacturers. This portable is very neat and well made, with the benefit of hardly any signs of wear & tear. Ideal for someone on the move."
+  },
+  {
+    "name": "Maritsa 30",
+    "serial": "30385970",
+    "image": "IMG_20210626_133113.jpg",
+    "description": "Another Maritsa 30 — this one found a new home in Northern Ireland."
+  },
+  {
+    "name": "Maritsa 30",
+    "serial": "3080940",
+    "image": "IMG_20211116_131944.jpeg",
+    "description": "Another popular Eastern-bloc 70s machine. This Maritsa has had an easy life so almost looks and feels like new. A great little machine to take on your travels — the almost-square case (310 mm × 325 mm) fits easily on most office shelves."
+  },
+  {
+    "name": "Maritsa 30",
+    "serial": "30769312",
+    "image": "IMG_20210308_115302.jpeg",
+    "description": "Another very neat and capable Maritsa 30. Made in Plovdiv, Bulgaria, with components from Japanese manufacturers. Very neat and well made with hardly any signs of wear & tear. Ideal for someone on the move."
+  },
+  {
+    "name": "Oliver Courier",
+    "serial": "57-33025",
+    "image": "IMG_20211210_140545.jpeg",
+    "description": "The second Courier I've brought back to life. This one needed a fair amount of restoration using donor machines. Most satisfying to work on as my confidence and skills have improved over the last three years. The metallic bronze finish is particularly attractive, with only minor dinks."
+  },
+  {
+    "name": "Olivetti Lettera 22",
+    "serial": "S702083",
+    "image": "IMG_20201115_150445.jpeg",
+    "description": "Manufactured in the mid/late 1950s in Glasgow — another fine example of a design icon. What makes this one special is the original 'Pistachio' body colour, very 'Retro'! Very neat for its age, complete with brown nylon and leather case with working metal zippers."
+  },
+  {
+    "name": "Olivetti Lettera 22",
+    "serial": "761393",
+    "image": "95bba6d1-3602-4438-b62f-1ed569bbe146.jpg",
+    "description": "An award-winning 1960 British-made portable, a classic dream machine from the retro era. Awarded the Compasso d'Oro prize in 1954; in 1959 the Illinois Institute of Technology chose the Lettera 22 as the best design product of the last 100 years. A great addition to your desk."
+  },
+  {
+    "name": "Olivetti Lettera 22",
+    "serial": "91098339",
+    "image": "IMG_20201104_103543.jpeg",
+    "description": "At last another Lettera 22 — it's been a while. This particular machine has 60 years of wear and the case zipper is damaged, otherwise it works smoothly. The Lettera 22 has a compact alloy-cast body and is considered a design classic."
+  },
+  {
+    "name": "Olivetti Lettera 22",
+    "serial": "91089145",
+    "image": "C414C038-3E22-4C45-BA97-06DA413A4039_1_105_c.jpeg",
+    "description": "Another iconic award-winning 50s-designed portable typewriter. With its characteristic soft 'tip-tip-tip' action and 'ting' close to the margin, the Lettera 22 is becoming a desirable machine among enthusiasts, retro/vintage collectors and writers. Only minor blemishes on the body paintwork; case zipper works to about 2/3 closure."
+  },
+  {
+    "name": "Olivetti Tropical",
+    "serial": "9265837",
+    "image": "BB4E1557-AF00-4CD0-9DF3-A1BE9342AF0D_1_201_a.jpeg",
+    "description": "Manufactured under licence in Brazil. This 'Olivetti' shares many similarities with the last of the Hermes 'Baby' machines (some of which were also made in Brasil). Serviced and ready to go to work."
+  },
+  {
+    "name": "Olivetti Valentine",
+    "serial": "5045932",
+    "image": "IMG_20210929_152805.jpeg",
+    "description": "'The red one'. This Valentine has had a thorough deep clean and adjustment and is ready for action. Condition is superb, save for a few surface scratches and a small dink to the metal work near the carriage-return lever."
+  },
+  {
+    "name": "Olivetti Valentine",
+    "serial": "5333113",
+    "image": "IMG_20210929_152805.jpeg",
+    "description": "Another 'red one'. Great condition, save for a few surface scratches, a hairline crack in the corner of the rear panel and a small dink near the carriage-return lever. The front 'fender bar' was missing but fortunately I had one from a donor machine bought for spares."
+  },
+  {
+    "name": "'71 Olivetti Valentine S",
+    "serial": "7286268",
+    "image": "IMG20221127122606.jpeg",
+    "description": "A Valentine 'S' brought back to super condition. Having seen a couple of standard Valentines pass through Retrotype already, this is the first 'S' model. I have a donor machine which has been useful to rob for missing keys/knobs and to figure out various mechanical fixes — they aren't easy to disassemble. Pica typeface and fresh ribbon on the original metal spools."
+  },
+  {
+    "name": "Olympia SF",
+    "serial": "141595",
+    "image": "IMG_20211031_131132.jpeg",
+    "description": "In 1959 two monkeys were sent into space and returned safely; in 1959 this very portable Olympia SF was made in West Germany — a very popular model. This one was sold via Olympia's business store on New Oxford Street, London. Choice of 'bonnet' colours."
+  },
+  {
+    "name": "1969 Olympia SF Deluxe",
+    "serial": "5-1874265",
+    "image": "IMG20220824105139.jpeg",
+    "description": "Manufactured throughout the 1960s, the SF Deluxe is a great portable with a quality pedigree from the West German manufacturer. Realistically priced as there are a few scuffs and the odd chip to the paintwork. Just before production moved to Japan — a pleasure to prepare for sale."
+  },
+  {
+    "name": "Olympia Splendid 66",
+    "image": "IMG20230413110841.jpeg",
+    "description": "Mechanically excellent but starting to show signs of its age — a few scuffs and tiny areas of corrosion. One of the extra features is dedicated keys for one and zero, often missing on 60s portables. The 'touch control' lever just under the 'bonnet' by the logo is surprisingly effective — from quite firm to light action."
+  },
+  {
+    "name": "Olympia Splendid 66",
+    "serial": "5-1501635",
+    "image": "IMG_20201118_125523.jpeg",
+    "description": "A super example of reliable precision German engineering. The Splendid 66 is a dark horse of Olympia's portable stable. Looking very similar in design to previous and later models, this is my personal choice — ready to use with red/black ribbon fitted, instruction manual, compact and easy to stow for travel."
+  },
+  {
+    "name": "Olympia Splendid 99",
+    "image": "IMG_20191020_122328.jpeg",
+    "description": "Quality 1960s West German manufactured portable typewriter. Very clear font (typeface), light action, cleaned and serviced ready for your creative writing. Complete with case which has signs of 50+ years of use, hence priced accordingly."
+  },
+  {
+    "name": "Olympia Traveller de Luxe S",
+    "image": "IMG_20210826_120805.jpg",
+    "description": "Probably one of the newest machines I have for sale but still around 40 years old. Fully featured with a great adjustable touch. Having spent too many hours watching Tokyo 2020 and the Paralympics, I felt this Japanese machine was worthy of a service and freshen-up. Has now found a new home."
+  },
+  {
+    "name": "Princess 300",
+    "serial": "217208",
+    "image": "IMG_20190731_151435.jpg",
+    "description": "Fully restored, clean and working — this Bavarian beauty is ready to grace your desktop. A sought-after model, the Princess 300 is easy to use, compact, and precision-made in Augsburg from the 1950s. Willy Schneider marketed these for the famous Swiss school of typing."
+  },
+  {
+    "name": "Princess 300",
+    "serial": "314992",
+    "image": "IMG20220726123149.jpeg",
+    "description": "A very attractive full-featured ultra-portable. The Princess 300 has quite a following among collectors of vintage tech. Made by Keller und Knappich in Germany — sturdy and should provide many more years of service. Some paint loss to the corners and where the return lever catches if folded carelessly. I'd love to add this to my own collection but I have to hold to my promise!"
+  },
+  {
+    "name": "Remington Envoy",
+    "image": "IMG_20211019_153950.jpeg",
+    "description": "A mid-60s entry-level compact machine. The Envoy is a no-frills machine ideal for the writer on the move. Little evidence of almost six decades of use — just minor surface scuffs and ageing."
+  },
+  {
+    "name": "Royal Royalite",
+    "serial": "RL-4999323",
+    "image": "IMG_20201129_120804.jpeg",
+    "description": "Introduced in 1955 after Royal merged with the Dutch factory McBee to provide a European base for the long-established US manufacturer. This Royalite is well presented in a tan leather-look case."
+  },
+  {
+    "name": "Royal Royalite 1958",
+    "serial": "RL-",
+    "image": "P1030163.jpeg",
+    "description": "Introduced in 1955 after Royal merged with the Dutch factory McBee. This green Royalite stands out with green key tops and a brass carriage lever, in a tan leather-look case."
+  },
+  {
+    "name": "Royal Tab-o-Matic",
+    "serial": "RO-3064817",
+    "image": "IMG_20201012_121705-0001.jpeg",
+    "description": "A portable classic — this Royal/Litton is ready to go, having been thoroughly cleaned and serviced. At nearly 50 years old it has a few minor scuffs on the powder-blue metal casing and yellowing to the type keys and case/lid, but is otherwise A1."
+  },
+  {
+    "name": "SCM GT Ghia",
+    "serial": "7YP C2928Z",
+    "image": "B1A0406F-D443-41BD-80E0-5790A1AA8A4B.jpeg",
+    "description": "Mid-70s chic — some would say style over substance. Made in England but featuring the design and badging of Italian coach builder Giacinto Ghia. Very much based on the SCM Corsair mechanics but with the 'power space' bar as an extra. Arrived having sustained damage to the casing, which was reflected in the lower than current market price."
+  },
+  {
+    "name": "Underwood 18",
+    "serial": "493446",
+    "image": "IMG_20211010_144119.jpg",
+    "description": "This mid-60s Underwood 18 shares its mechanics with the Antares Domus and Annabella (my favourite 60s portables). Made in Italy around 1965, complete with original metal ribbon spools and owner's booklet. Not only a useful working tool for your study or home office — also quite collectable. Going through the checklist of functions and adjustments, the sweet 'ting' of the end-of-line bell really spoke to me."
+  }
+  ]
+}

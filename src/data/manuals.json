@@ -1,0 +1,13 @@
+{
+  "manuals": [
+    { "title": "General typewriter instructions",        "file": "General typewriter instructions.pdf" },
+    { "title": "Antares Parva — owner's manual",         "file": "Antares Parva manual.pdf" },
+    { "title": "Olivetti Valentine — owner's booklet",   "file": "VALENTINE OWNER'S BOOKLET.pdf" },
+    { "title": "1956 Empire Aristocrat — owner's manual","file": "Empire Aristocrat.pdf" },
+    { "title": "1957 Consul 1511 — owner's manual",      "file": "Consul 1511 instructions.pdf" },
+    { "title": "1962 Consul 232 / 1531 — owner's manual","file": "Consul 232:1531 manuals.pdf" },
+    { "title": "1958 Royalite — owner's manual",         "file": "Royalite instructions booklet.pdf" },
+    { "title": "1956 Olympia SF — owner's manual",       "file": "Olympia SF owners manual.pdf" },
+    { "title": "Remington Envoy III — owner's manual",   "file": "Remington Envoy iii manual.pdf" }
+  ]
+}

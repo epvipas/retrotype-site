@@ -1,0 +1,32 @@
+---
+const pathname = new URL(Astro.request.url).pathname.replace(/\/$/, '') || '/';
+const items = [
+  { href: '/',                label: 'About' },
+  { href: '/stock',           label: 'Stock for sale' },
+  { href: '/archive',         label: 'A–Z archive' },
+  { href: '/info',            label: 'Manuals & info' },
+  { href: '/havelocks-haven', label: "Havelock's Haven" },
+];
+---
+<header class="site-header">
+  <div class="container site-header__inner">
+    <h1 class="site-title">
+      <a href="/">
+        Retrotype
+        <span class="site-title__sub">by Ohmsi · vintage typewriters</span>
+      </a>
+    </h1>
+    <nav class="site-nav" aria-label="Main">
+      <ul>
+        {items.map(item => (
+          <li>
+            <a
+              href={item.href}
+              aria-current={pathname === item.href ? 'page' : undefined}
+            >{item.label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>

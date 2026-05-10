@@ -1,0 +1,60 @@
+---
+import Base from '../layouts/Base.astro';
+import stockData from '../data/stock.json';
+const stock = stockData.listings;
+
+const USE_LOCAL = false;
+const CDN_BASE  = 'https://img1.wsimg.com/isteam/ip/eb78fbb0-bda5-4797-86a5-ceaff130aac1';
+const CDN_TRANSFORM = '/:/rs=w:600,h:450,cg:true,m';
+
+function imgUrl(filename: string): string {
+  if (USE_LOCAL) return `/images/stock/${filename}`;
+  return `${CDN_BASE}/${encodeURIComponent(filename)}${CDN_TRANSFORM}`;
+}
+---
+<Base
+  title="Stock for sale"
+  description="Restored vintage typewriters currently available via the Retrotype Etsy shop. Click through for full photos and to purchase."
+>
+  <section class="hero">
+    <div class="container">
+      <h1>Typewriters for sale</h1>
+      <p class="hero__byline">via our etsy shop</p>
+    </div>
+  </section>
+
+  <section class="section--narrow">
+    <p class="lede">
+      Each machine listed here has been deep-cleaned and fettled by hand, then
+      photographed and offered for sale through our Etsy shop. Click any card
+      below for full photos, condition notes, and to purchase.
+    </p>
+    <p class="text-center" style="margin: 2rem 0;">
+      <a class="btn" href="https://retrotypeuk.etsy.com" rel="noopener">
+        Visit the Etsy shop →
+      </a>
+    </p>
+  </section>
+
+  <div class="container">
+    <div class="grid">
+      {stock.map(item => (
+        <a href={item.etsy} rel="noopener" class="card" style="text-decoration: none;">
+          <div class="card__image">
+            <img src={imgUrl(item.image)} alt={item.name} loading="lazy" />
+          </div>
+          <h4>{item.name}</h4>
+          <p class="card__price">{item.price}</p>
+          <p>{item.description}</p>
+          <p class="mono" style="margin-top: 0.75rem; font-size: 0.85rem; color: var(--ribbon-red);">
+            View on Etsy →
+          </p>
+        </a>
+      ))}
+    </div>
+
+    <p class="text-center" style="margin: 3rem 0; font-style: italic; color: var(--ink-soft);">
+      A deep clean and serviceability check is carried out on every item for sale.
+    </p>
+  </div>
+</Base>

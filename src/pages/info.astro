@@ -1,0 +1,150 @@
+---
+import Base from '../layouts/Base.astro';
+import manualsData from '../data/manuals.json';
+const manuals = manualsData.manuals;
+
+// While the site is freshly migrated, manual PDFs are still served from the
+// old GoDaddy 'blobby' bucket. Once you've downloaded them locally with
+// `npm run fetch:manuals`, set USE_LOCAL = true.
+const USE_LOCAL = false;
+const BLOBBY_BASE = 'https://img1.wsimg.com/blobby/go/eb78fbb0-bda5-4797-86a5-ceaff130aac1';
+
+function pdfUrl(file: string): string {
+  if (USE_LOCAL) return `/manuals/${encodeURIComponent(file)}`;
+  return `${BLOBBY_BASE}/${encodeURIComponent(file)}`;
+}
+
+const links = [
+  { label: 'Richard Polt — The Classic Typewriter Page', url: 'https://site.xavier.edu/polt/typewriters/index.html' },
+  { label: 'Joe VC — typewriter videos on YouTube',      url: 'https://www.youtube.com/user/JoeVCA' },
+  { label: 'Typewriter Database',                         url: 'https://typewriterdatabase.com/' },
+  { label: 'My Old Typewriter',                           url: 'https://myoldtypewriter.com' },
+  { label: 'The Typosphere',                              url: 'http://typosphere.blogspot.com/' },
+  { label: 'FT — A long read on the typewriter revival',  url: 'https://www.ft.com/content/af307c99-ed36-4b0f-8ab4-a9d7681fd2fd' },
+  { label: 'Typewriter Review — Consul 232',              url: 'https://typewriterreview.com/2015/02/03/consul-232/' },
+];
+---
+<Base
+  title="Blogs, manuals & info"
+  description="News from Ohmsi, downloadable typewriter owner manuals, useful links and articles for vintage typewriter enthusiasts."
+>
+  <section class="hero">
+    <div class="container">
+      <h1>News from Ohmsi</h1>
+      <p class="hero__byline">blogs · manuals · useful links</p>
+    </div>
+  </section>
+
+  <section class="section--narrow">
+    <h2>The Hermes Collection</h2>
+    <h3>"These are the meditations of my heart"</h3>
+    <p>
+      The seed for this was Tom Hanks describing the merits of owning a Hermes
+      2000 in his short story <em>"The meditations of my heart"</em>. Although
+      the 3000 is a favourite of many writers, my preference is still the 2000.
+    </p>
+    <p>
+      The Hermes Baby (bottom left, in the original gallery) has the
+      much-sought-after cursive typeface and is useful for typing on greetings
+      cards and personal correspondence. Having undergone a full clean, service
+      and adjustment, the individual machines are made available to buy through
+      our Etsy shop.
+    </p>
+  </section>
+
+  <hr />
+
+  <section class="section--narrow">
+    <h2>Antique projects</h2>
+    <p>
+      Long-term restoration projects, including looking inside the back of a
+      1912 Corona No. 3 — photographs and progress notes coming back online
+      shortly.
+    </p>
+  </section>
+
+  <hr />
+
+  <section class="section--narrow">
+    <h2>Owner manuals</h2>
+    <p>
+      A small library of scanned and re-typeset owner manuals — handy if
+      you've inherited a machine that didn't come with paperwork.
+    </p>
+    <ul class="manual-list">
+      {manuals.map(m => (
+        <li>
+          <a href={pdfUrl(m.file)} target="_blank" rel="noopener">{m.title}</a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <hr />
+
+  <section class="section--narrow">
+    <h2>Useful links and articles</h2>
+    <p>
+      Thanks to the wonderful World Wide Web, finding out stuff, sharing ideas
+      and information can be as easy as asking a search engine. If you're not
+      quite sure what the question is, here are a few starting points I've
+      found very useful:
+    </p>
+    <ul style="line-height: 2;">
+      {links.map(l => (
+        <li><a href={l.url} target="_blank" rel="noopener">{l.label}</a></li>
+      ))}
+    </ul>
+  </section>
+
+  <hr />
+
+  <section class="section--narrow" id="contact">
+    <h2>Get in touch</h2>
+    <p>
+      Drop me a line if you've a question about a machine, a restoration query,
+      or you'd like to commission work.
+    </p>
+    <!-- Netlify Forms: zero backend, free tier covers this comfortably. -->
+    <form
+      name="contact"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      style="display: grid; gap: 1rem; max-width: 30rem;"
+    >
+      <input type="hidden" name="form-name" value="contact" />
+      <p style="display: none;">
+        <label>Don't fill this out: <input name="bot-field" /></label>
+      </p>
+
+      <label class="mono" style="font-size: 0.9rem;">
+        Name
+        <input
+          type="text" name="name" required
+          style="display: block; width: 100%; padding: 0.6rem; margin-top: 0.25rem; font-family: var(--font-body); font-size: 1rem; background: var(--paper-light); border: 1px solid var(--rule);"
+        />
+      </label>
+
+      <label class="mono" style="font-size: 0.9rem;">
+        Email
+        <input
+          type="email" name="email" required
+          style="display: block; width: 100%; padding: 0.6rem; margin-top: 0.25rem; font-family: var(--font-body); font-size: 1rem; background: var(--paper-light); border: 1px solid var(--rule);"
+        />
+      </label>
+
+      <label class="mono" style="font-size: 0.9rem;">
+        Message
+        <textarea
+          name="message" required rows="5"
+          style="display: block; width: 100%; padding: 0.6rem; margin-top: 0.25rem; font-family: var(--font-body); font-size: 1rem; background: var(--paper-light); border: 1px solid var(--rule);"
+        ></textarea>
+      </label>
+
+      <button type="submit" class="btn" style="justify-self: start; cursor: pointer;">
+        Send message
+      </button>
+    </form>
+  </section>
+</Base>

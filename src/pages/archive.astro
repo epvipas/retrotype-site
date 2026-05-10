@@ -1,0 +1,83 @@
+---
+import Base from '../layouts/Base.astro';
+import archiveData from '../data/archive.json';
+const archive = archiveData.machines;
+
+// CDN base used while images haven't been downloaded locally yet.
+// Once `npm run fetch:images` has been run, set USE_LOCAL = true and
+// the site will serve images from /images/archive/ instead.
+const USE_LOCAL = false;
+const CDN_BASE  = 'https://img1.wsimg.com/isteam/ip/eb78fbb0-bda5-4797-86a5-ceaff130aac1';
+const CDN_TRANSFORM = '/:/rs=w:600,h:450,cg:true,m';
+
+function imgUrl(filename: string): string {
+  if (USE_LOCAL) return `/images/archive/${filename}`;
+  return `${CDN_BASE}/${encodeURIComponent(filename)}${CDN_TRANSFORM}`;
+}
+
+// Group entries alphabetically for an A–Z feel.
+type Entry = typeof archive[number];
+const groups: Record<string, Entry[]> = {};
+for (const entry of archive) {
+  const letter = entry.name.replace(/^['"\d\s]+/, '').charAt(0).toUpperCase();
+  (groups[letter] ||= []).push(entry);
+}
+
+const letters = Object.keys(groups).sort();
+---
+<Base
+  title="A–Z Archive"
+  description="An A-to-Z archive of vintage typewriters restored and rehomed by Retrotype. Photos, descriptions and serial numbers of machines that have passed through the workshop."
+>
+  <section class="hero">
+    <div class="container">
+      <h1>A–Z Archive</h1>
+      <p class="hero__byline">
+        machines restored and gone to new owners
+      </p>
+    </div>
+  </section>
+
+  <div class="container">
+    <p class="lede" style="text-align: center; max-width: 50rem; margin: 2rem auto;">
+      A selection of the {archive.length} machines cleaned and made serviceable
+      by Retrotype.co.uk over the years.
+    </p>
+
+    <nav aria-label="Jump to letter" style="text-align: center; margin: 2rem 0;">
+      {letters.map((l, i) => (
+        <>
+          <a href={`#letter-${l}`} class="mono" style="padding: 0 0.4rem;">{l}</a>
+          {i < letters.length - 1 && <span style="color: var(--rule);">·</span>}
+        </>
+      ))}
+    </nav>
+
+    {letters.map(letter => (
+      <section id={`letter-${letter}`} style="margin-top: 3rem;">
+        <h2 style="font-family: var(--font-display); font-size: 2.5rem; border-bottom: 2px solid var(--ink); padding-bottom: 0.25rem;">{letter}</h2>
+        <div class="grid">
+          {groups[letter].map(entry => (
+            <article class="card">
+              <div class="card__image">
+                <img
+                  src={imgUrl(entry.image)}
+                  alt={entry.name}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <h4>{entry.name}</h4>
+              {entry.serial && <p class="card__sn">S/n {entry.serial}</p>}
+              <p>{entry.description}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+    ))}
+
+    <p class="text-center" style="margin-top: 4rem; font-style: italic; color: var(--ink-soft);">
+      Please feel free to share our archive.
+    </p>
+  </div>
+</Base>
