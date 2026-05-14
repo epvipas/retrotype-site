@@ -1,0 +1,78 @@
+---
+import Base from '../layouts/Base.astro';
+import { Content as History, frontmatter } from '../content/history.md';
+---
+<Base
+  title={frontmatter.title}
+  description="A short history of the typewriter — from Henry Mill's 1714 patent to Cormac McCarthy's $254,000 Olivetti. Stories, facts and famous machines."
+>
+  <section class="hero">
+    <div class="container">
+      <h1>{frontmatter.title}</h1>
+      <p class="hero__byline">{frontmatter.subtitle}</p>
+    </div>
+  </section>
+
+  <article class="prose section--narrow">
+    <History />
+  </article>
+</Base>
+
+<style is:global>
+  /* Long-form prose styling for the history page only. Most of these
+     rules ride on top of global.css's typography defaults; the goal is
+     comfortable reading at ~70 characters per line. */
+  .prose {
+    max-width: 42rem;
+    line-height: 1.7;
+  }
+
+  .prose h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    margin-top: 2.5rem;
+    border-bottom: 1px dashed var(--rule);
+    padding-bottom: 0.3rem;
+  }
+
+  .prose h2:first-of-type {
+    margin-top: 0;
+  }
+
+  .prose p {
+    max-width: none;          /* override the global 36rem measure */
+    margin-bottom: 1.1em;
+  }
+
+  .prose ul {
+    padding-left: 1.4rem;
+    margin-bottom: 1.2em;
+  }
+
+  .prose ul li {
+    margin-bottom: 0.5em;
+  }
+
+  .prose blockquote {
+    margin: 2rem 0;
+    padding: 0.5rem 0 0.5rem 1.5rem;
+    border-left: 3px solid var(--ribbon-red);
+    font-style: italic;
+    color: var(--ink-soft);
+  }
+
+  .prose hr {
+    margin: 3rem 0;
+    border: none;
+    border-top: 1px dashed var(--rule);
+  }
+
+  .prose a {
+    color: var(--ribbon-red);
+  }
+
+  .prose strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+</style>

@@ -77,3 +77,15 @@ collections:
             fields:
               - { label: "Title",        name: "title", widget: "string" }
               - { label: "PDF filename", name: "file",  widget: "string", hint: "Filename in /public/manuals/" }
+
+      # ---------- History page (prose) ----------
+      - name: "history"
+        label: "History page"
+        file: "src/content/history.md"
+        format: "frontmatter"
+        editor:
+          preview: false
+        fields:
+          - { label: "Title",    name: "title",    widget: "string" }
+          - { label: "Subtitle", name: "subtitle", widget: "string" }
+          - { label: "Body",     name: "body",     widget: "markdown" }
