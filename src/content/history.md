@@ -45,7 +45,7 @@ The era most of our archive comes from. As American makers consolidated into a h
 
 **Olympia** of Erfurt (later West Berlin) produced the **SM** and **SF** series — workhorse portables that turn up on our bench by the dozen.
 
-**Consul**, in Brno (then Czechoslovakia), made the unfussy **232** — affordable, mid-century-modern in styling, and beloved enough that we now stock it [in duck-egg blue, turquoise and grey](/archive#letter-C).
+**Consul**, in Brno (then Czechoslovakia), made the unfussy **232** — affordable, mid-century-modern in styling, and beloved enough that several have passed through Retrotype's workshop over the years in [duck-egg blue, turquoise and grey](/archive#letter-C) before being rehomed.
 
 **Antares**, **Erika** (Saxony), **Adler** (Frankfurt), **Princess** (Bavaria) — all built machines on the same broad design template but with their own quirks of finish, action and typeface.
 

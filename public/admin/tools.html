@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Retrotype admin tools</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=EB+Garamond:wght@400;500;600&family=Special+Elite&display=swap"
+  />
+  <style>
+    :root {
+      --paper:       #f4ecd8;
+      --paper-light: #faf5e7;
+      --paper-dark:  #e6dcc2;
+      --ink:         #2a241a;
+      --ink-soft:    #5a4f3e;
+      --ribbon-red:  #8c2f2f;
+      --accent:      #4a6b3a;
+      --rule:        #c9bd9d;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 1.05rem;
+      line-height: 1.5;
+    }
+    header {
+      background: var(--paper-light);
+      border-bottom: 2px solid var(--ink);
+      padding: 1.25rem 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    header h1 {
+      font-family: 'Special Elite', monospace;
+      margin: 0; font-size: 1.6rem; font-weight: normal;
+    }
+    header nav { display: flex; gap: 1.25rem; }
+    header nav a { font-family: 'Cutive Mono', monospace; color: var(--ink); text-decoration: none; font-size: 0.95rem; }
+    header nav a:hover { color: var(--ribbon-red); }
+    main { max-width: 64rem; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+    h2 {
+      font-family: 'Special Elite', monospace;
+      font-weight: normal; font-size: 1.6rem;
+      border-bottom: 1px dashed var(--rule);
+      padding-bottom: 0.4rem;
+      margin: 2.5rem 0 1rem;
+    }
+    h2:first-of-type { margin-top: 0; }
+    label { display: block; font-family: 'Cutive Mono', monospace; font-size: 0.9rem; margin: 1rem 0 0.3rem; color: var(--ink-soft); }
+    input[type=text], input[type=url], input[type=number], textarea {
+      width: 100%; padding: 0.6rem 0.75rem;
+      background: var(--paper-light); border: 1px solid var(--rule);
+      font-family: inherit; font-size: 1rem; color: var(--ink);
+    }
+    textarea { min-height: 6rem; resize: vertical; }
+    button.btn {
+      display: inline-block; margin-top: 0.5rem; padding: 0.55rem 1.1rem;
+      background: var(--ink); color: var(--paper-light);
+      border: 2px solid var(--ink);
+      font-family: 'Cutive Mono', monospace; font-size: 0.95rem;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      cursor: pointer;
+    }
+    button.btn:hover { background: var(--ribbon-red); border-color: var(--ribbon-red); }
+    button.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    button.btn--ghost { background: transparent; color: var(--ink); }
+    button.btn--ghost:hover { background: var(--ink); color: var(--paper-light); }
+    button.btn--danger { background: var(--ribbon-red); border-color: var(--ribbon-red); }
+    button.btn--danger:hover { background: var(--ink); border-color: var(--ink); }
+
+    .panel {
+      background: var(--paper-light);
+      border: 1px solid var(--paper-dark);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .row { display: flex; gap: 0.5rem; align-items: flex-end; flex-wrap: wrap; }
+    .row > * { flex: 1 1 auto; }
+    .image-pick { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 0.5rem; margin-top: 0.5rem; }
+    .image-pick label {
+      position: relative; margin: 0; cursor: pointer; aspect-ratio: 4/3;
+      border: 3px solid transparent; overflow: hidden; background: var(--paper-dark);
+    }
+    .image-pick input { position: absolute; opacity: 0; pointer-events: none; }
+    .image-pick img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .image-pick input:checked + img { outline: none; }
+    .image-pick label:has(input:checked) { border-color: var(--ribbon-red); }
+
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    th, td { padding: 0.6rem 0.75rem; text-align: left; vertical-align: top; border-bottom: 1px dashed var(--rule); }
+    th { font-family: 'Cutive Mono', monospace; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-soft); }
+    td.thumb { width: 90px; }
+    td.thumb img { width: 80px; height: 60px; object-fit: cover; }
+    td.actions { text-align: right; white-space: nowrap; }
+
+    #status { margin: 1rem 0; padding: 0.7rem 1rem; font-family: 'Cutive Mono', monospace; font-size: 0.95rem; }
+    #status.ok    { background: #e9efd9; color: #2c5a1f; border-left: 3px solid var(--accent); }
+    #status.err   { background: #f3dada; color: #6b1c1c; border-left: 3px solid var(--ribbon-red); }
+    #status.busy  { background: var(--paper-dark); color: var(--ink-soft); border-left: 3px solid var(--ink-soft); }
+    #status:empty { display: none; }
+
+    .auth-gate {
+      max-width: 30rem; margin: 5rem auto; text-align: center;
+      padding: 2rem; background: var(--paper-light); border: 1px solid var(--paper-dark);
+    }
+    .hidden { display: none; }
+    .small  { font-size: 0.85rem; color: var(--ink-soft); }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Retrotype admin tools</h1>
+  <nav>
+    <a href="/admin/">CMS editor</a>
+    <a href="/" target="_blank">Live site ↗</a>
+    <a href="#" id="logoutLink">Log out</a>
+  </nav>
+</header>
+
+<!-- Sign-in prompt (shown until Netlify Identity reports a logged-in user) -->
+<div id="authGate" class="auth-gate">
+  <h2 style="margin-top: 0; border: none;">Sign in</h2>
+  <p>These tools require you to be signed in via Netlify Identity.</p>
+  <button class="btn" id="loginBtn">Sign in</button>
+</div>
+
+<main id="main" class="hidden">
+
+  <div id="status"></div>
+
+  <!-- =========================================================
+       Import from Etsy
+       ========================================================= -->
+  <section>
+    <h2>Add a listing from an Etsy URL</h2>
+    <p class="small">
+      Paste the full Etsy listing URL. We'll pull the title, price, description and photos automatically.
+      You can edit any field before saving, and pick which photo to use.
+    </p>
+
+    <div class="panel">
+      <label for="etsyUrl">Etsy listing URL</label>
+      <div class="row">
+        <input id="etsyUrl" type="url" placeholder="https://retrotypeuk.etsy.com/uk/listing/1565705423/..." />
+        <button class="btn" id="fetchBtn">Fetch</button>
+      </div>
+    </div>
+
+    <div class="panel hidden" id="previewPanel">
+      <label for="pName">Name</label>
+      <input id="pName" type="text" />
+
+      <label for="pPrice">Price</label>
+      <input id="pPrice" type="text" placeholder="£198" />
+
+      <label for="pDesc">Description</label>
+      <textarea id="pDesc"></textarea>
+
+      <label>Choose primary photo</label>
+      <div id="imagePicker" class="image-pick"></div>
+
+      <label for="pFilename">Image filename (saved to /public/images/stock/)</label>
+      <input id="pFilename" type="text" placeholder="olivetti-lettera-22-1962.jpeg" />
+
+      <div class="row" style="margin-top: 1rem;">
+        <button class="btn"        id="saveBtn">Save to stock</button>
+        <button class="btn btn--ghost" id="cancelBtn">Cancel</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       Current stock listings — sell button per row
+       ========================================================= -->
+  <section>
+    <h2>Current stock — mark as sold</h2>
+    <p class="small">
+      Clicking <strong>Sold</strong> moves a listing to the A–Z archive, copies its photo across, and appends a "now gone to a new owner" note to the description. You can edit the archive entry afterwards in the CMS.
+    </p>
+    <div id="stockList">
+      <p class="small"><em>Loading stock listings…</em></p>
+    </div>
+  </section>
+
+</main>
+
+<!-- Netlify Identity widget -->
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+<script type="module">
+  // ----------------------------------------------------------------------
+  // Tiny helpers
+  // ----------------------------------------------------------------------
+  const $ = (sel) => document.querySelector(sel);
+  const status = $('#status');
+  const setStatus = (msg, kind = 'busy') => {
+    status.textContent = msg;
+    status.className = kind;
+    if (kind === 'ok') setTimeout(() => { status.textContent = ''; status.className = ''; }, 6000);
+  };
+
+  // Call a Netlify Function with the current Identity JWT.
+  async function call(name, payload) {
+    const user = window.netlifyIdentity.currentUser();
+    if (!user) throw new Error('Not signed in.');
+    const token = (await user.jwt()).toString?.() || (await user.jwt());
+    const res = await fetch(`/.netlify/functions/${name}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || `${res.status} ${res.statusText}`);
+    return data;
+  }
+
+  // ----------------------------------------------------------------------
+  // Auth wiring
+  // ----------------------------------------------------------------------
+  const authGate = $('#authGate');
+  const main     = $('#main');
+
+  function showApp(user) {
+    authGate.classList.add('hidden');
+    main.classList.remove('hidden');
+    loadStock();
+  }
+  function showLogin() {
+    authGate.classList.remove('hidden');
+    main.classList.add('hidden');
+  }
+
+  window.netlifyIdentity.on('init', user => user ? showApp(user) : showLogin());
+  window.netlifyIdentity.on('login', user => { window.netlifyIdentity.close(); showApp(user); });
+  window.netlifyIdentity.on('logout', () => showLogin());
+  window.netlifyIdentity.init();
+
+  $('#loginBtn').addEventListener('click', () => window.netlifyIdentity.open());
+  $('#logoutLink').addEventListener('click', (e) => { e.preventDefault(); window.netlifyIdentity.logout(); });
+
+  // ----------------------------------------------------------------------
+  // Etsy fetch + preview
+  // ----------------------------------------------------------------------
+  let lastFetched = null;
+
+  $('#fetchBtn').addEventListener('click', async () => {
+    const url = $('#etsyUrl').value.trim();
+    if (!url) return setStatus('Please paste an Etsy URL first.', 'err');
+    setStatus('Fetching listing from Etsy…');
+    try {
+      const data = await call('fetch-etsy', { url });
+      lastFetched = data;
+      $('#pName').value     = data.name        || '';
+      $('#pPrice').value    = data.price       || '';
+      $('#pDesc').value     = data.description || '';
+      const slug = slugify(data.name || 'listing');
+      $('#pFilename').value = `${slug}.jpg`;
+      renderImagePicker(data.images || []);
+      $('#previewPanel').classList.remove('hidden');
+      setStatus(`Fetched ${data.images?.length || 0} photo(s). Tweak as needed, then Save.`, 'ok');
+    } catch (err) {
+      setStatus(err.message, 'err');
+    }
+  });
+
+  $('#cancelBtn').addEventListener('click', () => {
+    $('#previewPanel').classList.add('hidden');
+    lastFetched = null;
+  });
+
+  function renderImagePicker(images) {
+    const wrap = $('#imagePicker');
+    wrap.innerHTML = '';
+    images.forEach((src, i) => {
+      const label = document.createElement('label');
+      label.innerHTML =
+        `<input type="radio" name="primaryImage" value="${i}" ${i === 0 ? 'checked' : ''} />
+         <img src="${src}" alt="photo ${i + 1}" loading="lazy" />`;
+      wrap.appendChild(label);
+    });
+  }
+
+  $('#saveBtn').addEventListener('click', async () => {
+    if (!lastFetched) return setStatus('Fetch a listing first.', 'err');
+    const picked = document.querySelector('input[name="primaryImage"]:checked');
+    const imgIdx = picked ? Number(picked.value) : 0;
+    const imageUrl = lastFetched.images?.[imgIdx];
+    if (!imageUrl) return setStatus('No image selected.', 'err');
+
+    const payload = {
+      listing: {
+        name:        $('#pName').value.trim(),
+        price:       $('#pPrice').value.trim(),
+        description: $('#pDesc').value.trim(),
+        etsy:        $('#etsyUrl').value.trim(),
+        image: { url: imageUrl, filename: $('#pFilename').value.trim() },
+      },
+    };
+    if (!payload.listing.name)  return setStatus('Name is required.', 'err');
+
+    setStatus('Saving listing… (this may take 10–20 seconds while the site rebuilds)');
+    try {
+      const out = await call('save-stock', payload);
+      setStatus(`Saved. Commit ${out.commit?.slice(0, 7)}. Site will rebuild in ~30 seconds.`, 'ok');
+      $('#previewPanel').classList.add('hidden');
+      $('#etsyUrl').value = '';
+      lastFetched = null;
+      // Refresh stock list optimistically — though it won't reflect this
+      // listing until the rebuild finishes.
+      setTimeout(loadStock, 1500);
+    } catch (err) {
+      setStatus(err.message, 'err');
+    }
+  });
+
+  // ----------------------------------------------------------------------
+  // Current stock listings + mark-as-sold
+  // ----------------------------------------------------------------------
+  async function loadStock() {
+    const list = $('#stockList');
+    list.innerHTML = '<p class="small"><em>Loading…</em></p>';
+    try {
+      const res  = await fetch('/data/stock.json', { cache: 'no-store' })
+                .catch(() => null);
+      // The built site doesn't expose src/data/ at runtime; instead grab
+      // the rendered /stock page and parse listings from it, OR — simpler
+      // — call a function. For now we read the JSON straight from GitHub
+      // raw, via a tiny pass-through. Easiest: read the rendered HTML.
+      const html = await (await fetch('/stock', { cache: 'no-store' })).text();
+      const items = extractStockFromHtml(html);
+      renderStockTable(items);
+    } catch (err) {
+      list.innerHTML = `<p class="err">Could not load stock list: ${err.message}</p>`;
+    }
+  }
+
+  // Parse the rendered /stock page rather than re-fetching JSON.
+  function extractStockFromHtml(html) {
+    const tmpl = document.createElement('div');
+    tmpl.innerHTML = html;
+    const cards = tmpl.querySelectorAll('a.card');
+    return Array.from(cards).map(card => ({
+      name:  card.querySelector('h4')?.textContent.trim()      || '',
+      price: card.querySelector('.card__price')?.textContent.trim() || '',
+      etsy:  card.getAttribute('href') || '',
+      image: card.querySelector('img')?.getAttribute('src') || '',
+    }));
+  }
+
+  function renderStockTable(items) {
+    const list = $('#stockList');
+    if (!items.length) {
+      list.innerHTML = '<p class="small"><em>No stock listings.</em></p>';
+      return;
+    }
+    list.innerHTML = `
+      <table>
+        <thead><tr><th></th><th>Listing</th><th>Price</th><th></th></tr></thead>
+        <tbody>
+          ${items.map((it, i) => `
+            <tr>
+              <td class="thumb"><img src="${it.image}" alt=""></td>
+              <td><strong>${escapeHtml(it.name)}</strong><br><a href="${it.etsy}" target="_blank" class="small">Etsy listing ↗</a></td>
+              <td>${escapeHtml(it.price)}</td>
+              <td class="actions">
+                <button class="btn btn--danger" data-i="${i}">Sold</button>
+              </td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>`;
+    list.querySelectorAll('button[data-i]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const it = items[Number(btn.dataset.i)];
+        sellListing(it, btn);
+      });
+    });
+  }
+
+  async function sellListing(it, btn) {
+    if (!confirm(`Move "${it.name}" to the archive?`)) return;
+    btn.disabled = true;
+    setStatus(`Marking "${it.name}" as sold…`);
+    try {
+      const out = await call('mark-sold', { etsy: it.etsy, name: it.name });
+      setStatus(`Moved "${it.name}" to archive. Commit ${out.commit?.slice(0, 7)}.`, 'ok');
+      setTimeout(loadStock, 1500);
+    } catch (err) {
+      btn.disabled = false;
+      setStatus(err.message, 'err');
+    }
+  }
+
+  // ----------------------------------------------------------------------
+  // Utilities
+  // ----------------------------------------------------------------------
+  function slugify(s) {
+    return String(s || '').toLowerCase()
+      .normalize('NFKD').replace(/[̀-ͯ]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '').slice(0, 60);
+  }
+  function escapeHtml(s) {
+    return String(s || '')
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+</script>
+</body>
+</html>

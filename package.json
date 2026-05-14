@@ -13,6 +13,7 @@
     "fetch:images": "node scripts/download-images.mjs"
   },
   "dependencies": {
-    "astro": "^6.3.1"
+    "astro": "^6.3.1",
+    "@octokit/rest": "^21.0.0"
   }
 }

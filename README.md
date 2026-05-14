@@ -115,6 +115,72 @@ deploy:
 
 The free tier covers 100 submissions/month, which is plenty.
 
+## Admin tools (Etsy import + mark-as-sold)
+
+The site has a small custom admin page at **`/admin/tools.html`** that lets the
+owner (a) add a new stock listing by pasting an Etsy URL, and (b) move a
+sold listing to the A–Z archive with one click. It runs three Netlify
+Functions:
+
+| Function | Path | What it does |
+| --- | --- | --- |
+| `fetch-etsy`  | `/.netlify/functions/fetch-etsy`  | Server-side scrape of an Etsy listing page (uses JSON-LD product schema). Returns title, price, description and image URLs. |
+| `save-stock`  | `/.netlify/functions/save-stock`  | Downloads the chosen image, commits it to `public/images/stock/` and appends a new entry to `src/data/stock.json` — in one commit. |
+| `mark-sold`   | `/.netlify/functions/mark-sold`   | Moves an entry from `stock.json` to `archive.json`, copies its image into `public/images/archive/`, appends a "now gone" note. |
+
+### One-time setup
+
+The Functions need a GitHub Personal Access Token so they can commit to
+the repo on the owner's behalf.
+
+1. **Create a fine-grained PAT** at
+   [github.com/settings/personal-access-tokens/new](https://github.com/settings/personal-access-tokens/new).
+   - *Resource owner*: the GitHub account or org that owns this repo
+   - *Repository access*: select **only** the `retrotype-site` repo (or whatever you named it)
+   - *Permissions* → *Repository permissions*:
+     - **Contents**: Read and write
+     - **Metadata**: Read-only (auto-selected)
+   - Set an expiration that suits you. 1 year is reasonable; remember to rotate.
+   - Click *Generate token*, copy it once (you won't see it again).
+
+2. **Add four environment variables to the Netlify site**:
+   *Site settings → Environment variables → Add a variable.*
+
+   | Key         | Value                                                 |
+   | ----------- | ----------------------------------------------------- |
+   | `GH_TOKEN`  | the PAT you just generated                            |
+   | `GH_OWNER`  | the GitHub username/org that owns the repo            |
+   | `GH_REPO`   | the repo name (e.g. `retrotype-site`)                 |
+   | `GH_BRANCH` | `main` (or whichever branch Netlify deploys from)     |
+
+3. **Redeploy once** so the Functions pick up the new env vars
+   (*Deploys → Trigger deploy → Deploy site*).
+
+That's it. The admin page is now ready to use at
+`https://<your-site>/admin/tools.html`. The owner signs in with the same
+Netlify Identity account they use for `/admin/` (the Decap CMS editor).
+
+### Day-to-day workflow
+
+**Adding a new listing:**
+1. Log in to `/admin/tools.html`.
+2. Paste the full Etsy URL into the "Add a listing" box, click *Fetch*.
+3. Tweak any fields, pick which photo to use (Etsy usually has 5–10).
+4. Click *Save to stock*. Netlify rebuilds in ~30 seconds. The listing
+   appears on the live site at `/stock`.
+
+**Marking a listing as sold:**
+1. In the "Current stock" table, click *Sold* next to the listing.
+2. Confirm the dialog.
+3. Listing moves to the archive (with a "now gone to a new owner" note
+   appended to the description). Rebuild takes ~30 seconds.
+
+If anything goes wrong, the page shows the actual error message from the
+Function (e.g. "Etsy returned 503" or "GitHub commit failed: …") so you
+can take a screenshot and share it.
+
+---
+
 ## Mirroring images and PDFs off GoDaddy
 
 While you're testing, the site references images on GoDaddy's CDN
