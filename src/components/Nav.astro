@@ -1,4 +1,6 @@
 ---
+import OhmsiMark from './OhmsiMark.astro';
+
 const pathname = new URL(Astro.request.url).pathname.replace(/\/$/, '') || '/';
 const items = [
   { href: '/',        label: 'About' },
@@ -9,12 +11,13 @@ const items = [
 ---
 <header class="site-header">
   <div class="container site-header__inner">
-    <h1 class="site-title">
-      <a href="/">
+    <a href="/" class="site-brand" aria-label="Retrotype home">
+      <OhmsiMark />
+      <span class="site-title">
         Retrotype
         <span class="site-title__sub">by Ohmsi · vintage typewriters</span>
-      </a>
-    </h1>
+      </span>
+    </a>
     <nav class="site-nav" aria-label="Main">
       <ul>
         {items.map(item => (
@@ -29,3 +32,19 @@ const items = [
     </nav>
   </div>
 </header>
+
+<style>
+  .site-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    text-decoration: none;
+    color: inherit;
+  }
+  .site-brand .site-title {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    line-height: 1;
+    display: block;
+  }
+</style>
