@@ -4,6 +4,39 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Retrotype CMS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap" />
+    <style>
+      /* Floating link to the custom admin tools page.
+         Pinned bottom-right so it stays out of Decap's chrome (which uses the
+         top bar, left sidebar and centre canvas). */
+      #rt-tools-link {
+        position: fixed;
+        bottom: 1.25rem;
+        right: 1.25rem;
+        z-index: 99999;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.7rem 1.1rem;
+        background: #8c2f2f;
+        color: #faf5e7;
+        font-family: 'Cutive Mono', monospace;
+        font-size: 0.9rem;
+        letter-spacing: 0.05em;
+        text-decoration: none;
+        border-radius: 4px;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+        transition: background 120ms ease, transform 120ms ease;
+      }
+      #rt-tools-link:hover {
+        background: #2a241a;
+        transform: translateY(-1px);
+      }
+      #rt-tools-link::before { content: "🛠"; }
+    </style>
   </head>
   <body>
     <!--
@@ -13,6 +46,10 @@
       at /admin and edit pages, archive entries, stock listings and manuals
       without touching any code.
     -->
+    <a id="rt-tools-link" href="/admin/tools.html"
+       title="Open the Retrotype admin tools (Etsy import &amp; mark-as-sold)">
+      Admin tools
+    </a>
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
   </body>
 </html>
