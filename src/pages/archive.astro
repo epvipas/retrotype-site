@@ -15,11 +15,14 @@ function imgUrl(filename: string): string {
   return `${CDN_BASE}/${encodeURIComponent(filename)}${CDN_TRANSFORM}`;
 }
 
-// Group entries alphabetically for an A–Z feel.
+// Group entries alphabetically — based on the first manufacturer word,
+// ignoring any leading year ("1962 Consul…"), decade ("1960s Consul…"),
+// or apostrophe-decade ("'71 Olivetti…") prefix.
 type Entry = typeof archive[number];
 const groups: Record<string, Entry[]> = {};
 for (const entry of archive) {
-  const letter = entry.name.replace(/^['"\d\s]+/, '').charAt(0).toUpperCase();
+  const stripped = entry.name.replace(/^[^A-Za-z]+(?:s\s+)?/, '');
+  const letter   = stripped.charAt(0).toUpperCase();
   (groups[letter] ||= []).push(entry);
 }
 

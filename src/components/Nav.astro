@@ -37,14 +37,32 @@ const items = [
   .site-brand {
     display: flex;
     align-items: center;
-    gap: 0.85rem;
+    gap: 1.1rem;
     text-decoration: none;
     color: inherit;
   }
+
   .site-brand .site-title {
-    font-family: var(--font-display);
-    font-size: 1.6rem;
-    line-height: 1;
     display: block;
+    font-family: var(--font-display);
+    /* Larger, more confident wordmark — scales smoothly with viewport. */
+    font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+    line-height: 1;
+    letter-spacing: 0.01em;
+    /* A faint offset shadow mimics typewriter ink slightly skewed by
+       carriage pressure — adds weight without making it heavier. */
+    text-shadow: 1px 1px 0 rgba(42, 36, 26, 0.12);
+  }
+
+  .site-brand .site-title__sub {
+    /* Subtitle bumped up, still understated. */
+    font-size: clamp(0.85rem, 1vw, 0.95rem);
+    letter-spacing: 0.18em;
+    margin-top: 4px;
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 600px) {
+    .site-brand { gap: 0.75rem; }
   }
 </style>

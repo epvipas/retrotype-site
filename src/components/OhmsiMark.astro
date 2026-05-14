@@ -30,7 +30,9 @@
 
 <style>
   .ohmsi-mark {
-    width: clamp(48px, 6vw, 64px);
+    /* Bigger, more prominent. Scales with viewport but capped so it doesn't
+       dominate on very wide screens. */
+    width: clamp(72px, 10vw, 110px);
     height: auto;
     display: block;
     flex-shrink: 0;
