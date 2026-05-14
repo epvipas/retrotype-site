@@ -6,7 +6,7 @@ const manuals = manualsData.manuals;
 // While the site is freshly migrated, manual PDFs are still served from the
 // old GoDaddy 'blobby' bucket. Once you've downloaded them locally with
 // `npm run fetch:manuals`, set USE_LOCAL = true.
-const USE_LOCAL = false;
+const USE_LOCAL = true;
 const BLOBBY_BASE = 'https://img1.wsimg.com/blobby/go/eb78fbb0-bda5-4797-86a5-ceaff130aac1';
 
 function pdfUrl(file: string): string {

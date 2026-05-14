@@ -1,11 +1,10 @@
 ---
 const pathname = new URL(Astro.request.url).pathname.replace(/\/$/, '') || '/';
 const items = [
-  { href: '/',                label: 'About' },
-  { href: '/stock',           label: 'Stock for sale' },
-  { href: '/archive',         label: 'A–Z archive' },
-  { href: '/info',            label: 'Manuals & info' },
-  { href: '/havelocks-haven', label: "Havelock's Haven" },
+  { href: '/',        label: 'About' },
+  { href: '/stock',   label: 'Stock for sale' },
+  { href: '/archive', label: 'A–Z archive' },
+  { href: '/info',    label: 'Manuals & info' },
 ];
 ---
 <header class="site-header">

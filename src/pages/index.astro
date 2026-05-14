@@ -1,7 +1,36 @@
 ---
 import Base from '../layouts/Base.astro';
+
+// Image URL builder — same pattern as archive/stock pages. Once the
+// CDN images have been mirrored with `npm run fetch:images`, flip
+// USE_LOCAL = true everywhere.
+const USE_LOCAL = false;
+const CDN_BASE  = 'https://img1.wsimg.com/isteam/ip/eb78fbb0-bda5-4797-86a5-ceaff130aac1';
+
+function img(filename: string, transform = '/:/rs=w:1200,cg:true,m'): string {
+  if (USE_LOCAL) return `/images/archive/${filename}`;
+  return `${CDN_BASE}/${encodeURIComponent(filename)}${transform}`;
+}
+
+// Photos used on this page — picked to match the original site's
+// section placement.
+const heroPhoto    = 'IMG_20201026_130911.jpg';            // original og:image
+const portablePic  = 'IMG_20201115_150445.jpeg';           // pistachio Lettera 22
+const desktopPic   = 'IMG_20220208_103712.jpg';            // Erika Pullman Model 12
+const antiquePic   = '4533a026-7688-4a2f-b945-ab6f608edf05.jpg'; // 1950s Bluebird
 ---
 <Base title="Retrotype" description="Restored vintage typewriters by Ohmsi. Portable and desktop machines from 1892 onwards, lovingly fettled and sold via Etsy.">
+
+  <!-- Full-width hero image at the top, matching the original layout -->
+  <figure class="home-hero">
+    <img
+      src={img(heroPhoto, '/:/rs=w:1800,cg:true,m')}
+      alt="Restored vintage typewriters at the Retrotype workshop"
+      loading="eager"
+      fetchpriority="high"
+    />
+  </figure>
+
   <section class="hero">
     <div class="container">
       <h1>Retrotype by Ohmsi</h1>
@@ -43,8 +72,13 @@ import Base from '../layouts/Base.astro';
   <section class="container">
     <h2 class="text-center">What is your retro type?</h2>
 
+    <!-- Three cards with photo above each, matching the original layout -->
     <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
-      <article class="card" style="padding: 1.5rem;">
+
+      <article class="card">
+        <div class="card__image">
+          <img src={img(portablePic)} alt="Olivetti Lettera 22 — example of a portable" loading="lazy" />
+        </div>
         <h4>Portable</h4>
         <p>
           From First World War Corona 3 foldaway antiques through to
@@ -55,7 +89,10 @@ import Base from '../layouts/Base.astro';
         </p>
       </article>
 
-      <article class="card" style="padding: 1.5rem;">
+      <article class="card">
+        <div class="card__image">
+          <img src={img(desktopPic)} alt="Erika Pullman Model 12 — example of a desktop machine" loading="lazy" />
+        </div>
         <h4>Desktop</h4>
         <p>
           Substantial machines, normally purchased for office or business use.
@@ -67,7 +104,10 @@ import Base from '../layouts/Base.astro';
         </p>
       </article>
 
-      <article class="card" style="padding: 1.5rem;">
+      <article class="card">
+        <div class="card__image">
+          <img src={img(antiquePic)} alt="1950s Bluebird — an example of a vintage machine" loading="lazy" />
+        </div>
         <h4>Antique or vintage?</h4>
         <p>
           <em>Antique</em> generally implies over 100 years old, however in
@@ -77,6 +117,7 @@ import Base from '../layouts/Base.astro';
           years old, often easier to use and maintain.
         </p>
       </article>
+
     </div>
   </section>
 
@@ -98,4 +139,29 @@ import Base from '../layouts/Base.astro';
       <li>Final test page typed and supplied with the machine</li>
     </ul>
   </section>
+
 </Base>
+
+<style>
+  /* Full-width hero image at the very top of the homepage, matching
+     the original site's layout but with our refreshed framing. */
+  .home-hero {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background: var(--paper-dark);
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .home-hero img {
+    display: block;
+    width: 100%;
+    max-height: 70vh;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  @media (max-width: 600px) {
+    .home-hero img { max-height: 50vh; }
+  }
+</style>
