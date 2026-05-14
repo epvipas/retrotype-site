@@ -203,26 +203,61 @@ In manual mode the workflow is only slightly more work:
 The image download itself still works because Etsy's image CDN
 (`i.etsystatic.com`) isn't bot-blocked the way the main site is.
 
-#### Permanent fix: Etsy API
+#### Permanent fix: ETSY_API_KEY
 
-If the auto-fetch keeps being blocked and you want it to "just work,"
-the proper fix is to switch to **Etsy's Open API v3**:
+`fetch-etsy.mjs` already knows how to use Etsy's **Open API v3**. As
+soon as you add an `ETSY_API_KEY` environment variable on Netlify the
+function uses the API first and only falls back to scraping if the API
+call itself fails. The API is reliable, doesn't get IP-blocked, and is
+free for read-only listing access (10,000 calls/day, far more than
+you'll ever need).
 
-1. Register an app at
-   [developers.etsy.com](https://developers.etsy.com/documentation/essentials/registering).
-2. Get an API key string.
-3. Add it as a Netlify env var `ETSY_API_KEY`.
-4. Update `netlify/functions/fetch-etsy.mjs` to call
-   `https://openapi.etsy.com/v3/application/listings/{listing_id}`
-   with `x-api-key: $ETSY_API_KEY`.
+##### How to get a key
 
-The listing endpoint returns the same fields we currently scrape
-(title, price, description, images) but with no chance of being
-blocked. Free tier is 10,000 requests/day — plenty.
+1. Sign in with the Retrotype Etsy account at
+   [developers.etsy.com](https://developers.etsy.com).
+2. Click **"Create a new app"** → fill in the form:
+   - *Name*: `Retrotype admin tools` (or whatever)
+   - *Description*: "Imports listings from my own Etsy shop into the
+     retrotype.co.uk site"
+   - *Justification*: "Read-only access to my own listings to populate
+     a static catalogue site."
+3. Submit. Etsy approves read-only access immediately — no waiting.
+4. The app dashboard shows a **Keystring** (e.g. `abc123xyz...`).
+   That's your API key.
 
-I can build this out for you whenever you're ready; the registration
-takes ~10 minutes and Etsy approves the app immediately for
-read-only listing access.
+##### Add it to Netlify
+
+*Site settings → Environment variables → Add a variable:*
+
+| Key             | Value                  |
+| --------------- | ---------------------- |
+| `ETSY_API_KEY`  | the keystring from Etsy |
+
+Trigger a redeploy (*Deploys → Trigger deploy*) so the function picks
+up the new env var. From the next deploy onwards, the auto-fetch in
+the admin tools "just works" — no more 403s, no manual entry needed
+in the normal case.
+
+### Duplicate detection
+
+After fetching a listing (via API or scrape) the function also checks
+your existing `stock.json` and `archive.json` for matches and returns
+them to the admin UI. You'll see one of three things in the admin
+tools page:
+
+- **No matches** — proceed straight to the preview / save panel.
+- **Close matches (similar name)** — yellow panel listing the existing
+  entries with a match percentage. Click *Continue* to proceed, or
+  *Cancel* if it's the same one you already added.
+- **Exact match** — same Etsy URL or identical name. The *Continue*
+  button is disabled by default; tick the override checkbox to add
+  anyway (useful when restocking a different example of the same model).
+
+Match scoring is a token-set Jaccard similarity on normalised names
+(case-folded, punctuation removed). Threshold is 50% similarity — low
+enough to catch near-duplicates without being noisy. Up to 8 matches
+are shown.
 
 ---
 

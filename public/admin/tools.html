@@ -161,6 +161,27 @@
       </p>
     </div>
 
+    <!-- Duplicate warning, shown if existing stock/archive entries look similar -->
+    <div class="panel hidden" id="dupePanel" style="border-left: 4px solid #b78a2a; background: #fdf6e3;">
+      <h3 style="margin-top: 0; font-family: 'Special Elite', monospace; font-weight: normal;">
+        ⚠️ Possible duplicate
+      </h3>
+      <p class="small" id="dupeIntro" style="margin-bottom: 0.5rem;"></p>
+      <table id="dupeTable" style="width: 100%; margin: 0.5rem 0 1rem;"></table>
+      <p class="small" id="dupeBlockedMsg" style="display: none; color: #6b1c1c;">
+        <strong>Exact match found.</strong> If you really mean to add this anyway
+        (e.g. a different example of the same model), tick the box below.
+      </p>
+      <label class="small" id="dupeOverrideLabel" style="display: none;">
+        <input type="checkbox" id="dupeOverride" />
+        Yes, add as a separate entry anyway.
+      </label>
+      <div class="row" style="margin-top: 1rem;">
+        <button class="btn"        id="dupeProceedBtn">Continue to edit / save</button>
+        <button class="btn btn--ghost" id="dupeCancelBtn">Cancel</button>
+      </div>
+    </div>
+
     <div class="panel hidden" id="previewPanel">
       <p id="manualHint" class="small hidden" style="background: #f8eecf; padding: 0.6rem 0.9rem; border-left: 3px solid #b78a2a; margin-bottom: 1rem;">
         <strong>Manual entry mode.</strong>
@@ -307,14 +328,22 @@
     try {
       const data = await call('fetch-etsy', { url });
       lastFetched = data;
-      openPreview({
-        name:        data.name,
-        price:       data.price,
-        description: data.description,
-        images:      data.images,
-        manual:      false,
-      });
-      setStatus(`Fetched ${data.images?.length || 0} photo(s). Tweak as needed, then Save.`, 'ok');
+      const dupes = data.duplicates || [];
+      if (dupes.length) {
+        // Show the duplicate panel first; preview opens after the owner
+        // clicks Continue.
+        renderDupePanel(dupes, data.name || '(unnamed listing)');
+      } else {
+        openPreview({
+          name:        data.name,
+          price:       data.price,
+          description: data.description,
+          images:      data.images,
+          manual:      false,
+        });
+        const src = data.source === 'api' ? '(via Etsy API)' : '';
+        setStatus(`Fetched ${data.images?.length || 0} photo(s) ${src}. Tweak as needed, then Save.`, 'ok');
+      }
     } catch (err) {
       // If Etsy blocked us, drop into manual mode automatically so the
       // owner can still finish the job.
@@ -326,6 +355,80 @@
         setStatus(err.message, 'err');
       }
     }
+  });
+
+  // -- Duplicate panel ---------------------------------------------------
+  function renderDupePanel(dupes, newName) {
+    const panel    = $('#dupePanel');
+    const table    = $('#dupeTable');
+    const intro    = $('#dupeIntro');
+    const blocked  = $('#dupeBlockedMsg');
+    const overLab  = $('#dupeOverrideLabel');
+    const proceed  = $('#dupeProceedBtn');
+    const override = $('#dupeOverride');
+
+    const hasExact = dupes.some(d => d.exact);
+    intro.textContent = hasExact
+      ? `An entry that looks exactly like "${newName}" already exists in your data:`
+      : `Found ${dupes.length} similar entr${dupes.length === 1 ? 'y' : 'ies'} — please review before continuing:`;
+
+    table.innerHTML = `
+      <thead>
+        <tr>
+          <th style="width: 14%;">Where</th>
+          <th>Existing entry</th>
+          <th style="width: 16%;">Match</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${dupes.map(d => `
+          <tr>
+            <td><strong>${d.where}</strong></td>
+            <td>
+              ${escapeHtml(d.name)}
+              ${d.serial ? `<br><span class="small">S/n ${escapeHtml(d.serial)}</span>` : ''}
+              ${d.etsy   ? `<br><a href="${escapeHtml(d.etsy)}" target="_blank" class="small">Etsy ↗</a>` : ''}
+            </td>
+            <td>
+              <strong>${d.exact ? 'EXACT' : Math.round(d.similarity * 100) + '%'}</strong>
+              <br><span class="small">${escapeHtml(d.reason)}</span>
+            </td>
+          </tr>
+        `).join('')}
+      </tbody>`;
+
+    if (hasExact) {
+      blocked.style.display = '';
+      overLab.style.display = '';
+      override.checked      = false;
+      proceed.disabled      = true;
+      override.onchange = () => { proceed.disabled = !override.checked; };
+    } else {
+      blocked.style.display = 'none';
+      overLab.style.display = 'none';
+      proceed.disabled      = false;
+    }
+
+    panel.classList.remove('hidden');
+    panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  $('#dupeProceedBtn').addEventListener('click', () => {
+    $('#dupePanel').classList.add('hidden');
+    openPreview({
+      name:        lastFetched.name,
+      price:       lastFetched.price,
+      description: lastFetched.description,
+      images:      lastFetched.images,
+      manual:      false,
+    });
+    setStatus('Reviewed duplicates — proceed with editing then Save.', 'ok');
+  });
+
+  $('#dupeCancelBtn').addEventListener('click', () => {
+    $('#dupePanel').classList.add('hidden');
+    lastFetched = null;
+    setStatus('Cancelled — no listing was added.', 'busy');
   });
 
   $('#manualBtn').addEventListener('click', () => {
