@@ -150,11 +150,26 @@
       <label for="etsyUrl">Etsy listing URL</label>
       <div class="row">
         <input id="etsyUrl" type="url" placeholder="https://retrotypeuk.etsy.com/uk/listing/1565705423/..." />
-        <button class="btn" id="fetchBtn">Fetch</button>
+        <button class="btn"        id="fetchBtn">Fetch</button>
+        <button class="btn btn--ghost" id="manualBtn" title="Fill in by hand">Manual entry</button>
       </div>
+      <p class="small" style="margin-top: 0.6rem;">
+        Etsy occasionally blocks server-side fetches from datacentre IPs.
+        If Fetch fails, click <strong>Manual entry</strong> and paste an
+        image URL by right-clicking the photo on the Etsy listing →
+        <em>Copy image address</em>.
+      </p>
     </div>
 
     <div class="panel hidden" id="previewPanel">
+      <p id="manualHint" class="small hidden" style="background: #f8eecf; padding: 0.6rem 0.9rem; border-left: 3px solid #b78a2a; margin-bottom: 1rem;">
+        <strong>Manual entry mode.</strong>
+        Fill in the fields below. For the photo: on the Etsy listing in your
+        other tab, right-click the image you want and choose
+        <em>Copy image address</em>, then paste it into the
+        <em>Image URL</em> field below.
+      </p>
+
       <label for="pName">Name</label>
       <input id="pName" type="text" />
 
@@ -164,8 +179,18 @@
       <label for="pDesc">Description</label>
       <textarea id="pDesc"></textarea>
 
-      <label>Choose primary photo</label>
-      <div id="imagePicker" class="image-pick"></div>
+      <!-- Auto-scrape mode: a grid of all photos Etsy returned -->
+      <div id="autoImageSection">
+        <label>Choose primary photo</label>
+        <div id="imagePicker" class="image-pick"></div>
+      </div>
+
+      <!-- Manual mode: owner pastes a single image URL -->
+      <div id="manualImageSection" class="hidden">
+        <label for="pImageUrl">Image URL (from the Etsy listing)</label>
+        <input id="pImageUrl" type="url"
+               placeholder="https://i.etsystatic.com/.../il_fullxfull.xxxx.jpg" />
+      </div>
 
       <label for="pFilename">Image filename (saved to /public/images/stock/)</label>
       <input id="pFilename" type="text" placeholder="olivetti-lettera-22-1962.jpeg" />
@@ -253,6 +278,27 @@
   // Etsy fetch + preview
   // ----------------------------------------------------------------------
   let lastFetched = null;
+  let manualMode  = false;
+
+  function openPreview({ name = '', price = '', description = '', images = [], manual = false }) {
+    manualMode = manual;
+    $('#pName').value     = name;
+    $('#pPrice').value    = price;
+    $('#pDesc').value     = description;
+    $('#pFilename').value = `${slugify(name || 'listing')}.jpg`;
+    if (manual) {
+      $('#autoImageSection').classList.add('hidden');
+      $('#manualImageSection').classList.remove('hidden');
+      $('#manualHint').classList.remove('hidden');
+      $('#pImageUrl').value = '';
+    } else {
+      $('#autoImageSection').classList.remove('hidden');
+      $('#manualImageSection').classList.add('hidden');
+      $('#manualHint').classList.add('hidden');
+      renderImagePicker(images);
+    }
+    $('#previewPanel').classList.remove('hidden');
+  }
 
   $('#fetchBtn').addEventListener('click', async () => {
     const url = $('#etsyUrl').value.trim();
@@ -261,22 +307,38 @@
     try {
       const data = await call('fetch-etsy', { url });
       lastFetched = data;
-      $('#pName').value     = data.name        || '';
-      $('#pPrice').value    = data.price       || '';
-      $('#pDesc').value     = data.description || '';
-      const slug = slugify(data.name || 'listing');
-      $('#pFilename').value = `${slug}.jpg`;
-      renderImagePicker(data.images || []);
-      $('#previewPanel').classList.remove('hidden');
+      openPreview({
+        name:        data.name,
+        price:       data.price,
+        description: data.description,
+        images:      data.images,
+        manual:      false,
+      });
       setStatus(`Fetched ${data.images?.length || 0} photo(s). Tweak as needed, then Save.`, 'ok');
     } catch (err) {
-      setStatus(err.message, 'err');
+      // If Etsy blocked us, drop into manual mode automatically so the
+      // owner can still finish the job.
+      if (/blocked|403|captcha/i.test(err.message)) {
+        lastFetched = { etsyUrl: url };
+        openPreview({ manual: true });
+        setStatus(err.message + ' Switched to manual entry.', 'err');
+      } else {
+        setStatus(err.message, 'err');
+      }
     }
+  });
+
+  $('#manualBtn').addEventListener('click', () => {
+    const url = $('#etsyUrl').value.trim();
+    lastFetched = { etsyUrl: url };
+    openPreview({ manual: true });
+    setStatus('Manual entry mode — fill in the fields below.', 'busy');
   });
 
   $('#cancelBtn').addEventListener('click', () => {
     $('#previewPanel').classList.add('hidden');
     lastFetched = null;
+    manualMode  = false;
   });
 
   function renderImagePicker(images) {
@@ -292,11 +354,20 @@
   }
 
   $('#saveBtn').addEventListener('click', async () => {
-    if (!lastFetched) return setStatus('Fetch a listing first.', 'err');
-    const picked = document.querySelector('input[name="primaryImage"]:checked');
-    const imgIdx = picked ? Number(picked.value) : 0;
-    const imageUrl = lastFetched.images?.[imgIdx];
-    if (!imageUrl) return setStatus('No image selected.', 'err');
+    if (!lastFetched) return setStatus('Fetch or start a manual entry first.', 'err');
+
+    // Pull the image URL from whichever mode is active.
+    let imageUrl;
+    if (manualMode) {
+      imageUrl = $('#pImageUrl').value.trim();
+      if (!imageUrl) return setStatus('Paste an image URL from the Etsy listing.', 'err');
+      if (!/^https?:\/\//i.test(imageUrl)) return setStatus('Image URL must be http(s).', 'err');
+    } else {
+      const picked = document.querySelector('input[name="primaryImage"]:checked');
+      const imgIdx = picked ? Number(picked.value) : 0;
+      imageUrl = lastFetched.images?.[imgIdx];
+      if (!imageUrl) return setStatus('No image selected.', 'err');
+    }
 
     const payload = {
       listing: {

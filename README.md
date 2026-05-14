@@ -179,6 +179,51 @@ If anything goes wrong, the page shows the actual error message from the
 Function (e.g. "Etsy returned 503" or "GitHub commit failed: …") so you
 can take a screenshot and share it.
 
+### When Etsy blocks the auto-fetch
+
+Etsy aggressively detects and blocks server-side scraping from
+datacentre IPs (Netlify Functions run on AWS Lambda, which Etsy treats
+as bot traffic). When that happens you'll see:
+
+> Etsy blocked the automated fetch… Switch to manual entry.
+
+The admin page automatically drops into **manual entry** mode at this
+point. You can also click *Manual entry* up-front to skip the auto-fetch
+attempt entirely.
+
+In manual mode the workflow is only slightly more work:
+
+1. Open the Etsy listing in another browser tab.
+2. Type/paste the title, price and description into the admin form.
+3. On the Etsy listing, right-click the photo you want →
+   **Copy image address**.
+4. Paste that URL into the *Image URL* field on the admin form.
+5. Click *Save to stock*.
+
+The image download itself still works because Etsy's image CDN
+(`i.etsystatic.com`) isn't bot-blocked the way the main site is.
+
+#### Permanent fix: Etsy API
+
+If the auto-fetch keeps being blocked and you want it to "just work,"
+the proper fix is to switch to **Etsy's Open API v3**:
+
+1. Register an app at
+   [developers.etsy.com](https://developers.etsy.com/documentation/essentials/registering).
+2. Get an API key string.
+3. Add it as a Netlify env var `ETSY_API_KEY`.
+4. Update `netlify/functions/fetch-etsy.mjs` to call
+   `https://openapi.etsy.com/v3/application/listings/{listing_id}`
+   with `x-api-key: $ETSY_API_KEY`.
+
+The listing endpoint returns the same fields we currently scrape
+(title, price, description, images) but with no chance of being
+blocked. Free tier is 10,000 requests/day — plenty.
+
+I can build this out for you whenever you're ready; the registration
+takes ~10 minutes and Etsy approves the app immediately for
+read-only listing access.
+
 ---
 
 ## Mirroring images and PDFs off GoDaddy

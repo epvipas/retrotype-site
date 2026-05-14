@@ -45,19 +45,47 @@ export const handler = async (event, context) => {
   try {
     const res = await fetch(url, {
       headers: {
-        // Etsy serves a degraded page to bare fetch UAs; mimic a real browser.
+        // Full browser-like header set. Etsy's bot detection looks at
+        // more than just User-Agent — missing sec-fetch-* and a real
+        // Accept-Encoding makes the request stand out as automated.
         'User-Agent':
-          'Mozilla/5.0 (Macintosh; Intel Mac OS X 13_5) AppleWebKit/605.1.15 ' +
-          '(KHTML, like Gecko) Version/16.6 Safari/605.1.15',
-        'Accept': 'text/html,application/xhtml+xml',
-        'Accept-Language': 'en-GB,en;q=0.9',
+          'Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5) AppleWebKit/605.1.15 ' +
+          '(KHTML, like Gecko) Version/17.5 Safari/605.1.15',
+        'Accept':                    'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        'Accept-Language':           'en-GB,en;q=0.9',
+        'Accept-Encoding':           'gzip, deflate, br',
+        'Cache-Control':             'no-cache',
+        'Pragma':                    'no-cache',
+        'sec-ch-ua':                 '"Not.A/Brand";v="8", "Chromium";v="124", "Google Chrome";v="124"',
+        'sec-ch-ua-mobile':          '?0',
+        'sec-ch-ua-platform':        '"macOS"',
+        'sec-fetch-dest':            'document',
+        'sec-fetch-mode':            'navigate',
+        'sec-fetch-site':            'none',
+        'sec-fetch-user':            '?1',
+        'upgrade-insecure-requests': '1',
+        'Referer':                   'https://www.google.com/',
       },
       redirect: 'follow',
     });
     if (!res.ok) {
-      return cors(502, { error: `Etsy returned ${res.status} ${res.statusText}` });
+      // Surface a clearer hint so the admin UI can switch to manual mode.
+      const hint = res.status === 403
+        ? 'Etsy blocked the automated fetch (most likely because Netlify Functions run on AWS Lambda, which Etsy treats as bot traffic). Switch to manual entry — see the panel below.'
+        : `Etsy returned ${res.status} ${res.statusText}.`;
+      return cors(res.status === 403 ? 403 : 502, {
+        error: hint,
+        blocked: res.status === 403,
+      });
     }
     html = await res.text();
+    // Etsy sometimes serves a captcha page with HTTP 200. Detect it:
+    if (/captcha|are you a robot|forbidden/i.test(html.slice(0, 4000))) {
+      return cors(403, {
+        error: 'Etsy returned a CAPTCHA page. Switch to manual entry.',
+        blocked: true,
+      });
+    }
   } catch (err) {
     return cors(502, { error: `Could not fetch Etsy URL: ${err.message}` });
   }
