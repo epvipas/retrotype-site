@@ -45,8 +45,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://retrotype.c
 			rel="stylesheet"
 			href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Special+Elite&display=swap"
 		/>
-		<!-- Netlify Identity widget -->
-		<script src="https://identity.netlify.com/v1/netlify-identity-widget.js" type="text/javascript"></script>
+		<!-- Netlify Identity widget — is:inline prevents Astro bundling it -->
+		<script is:inline src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 	</head>
 	<body>
 		<a class="visually-hidden" href="#main">Skip to main content</a>
@@ -55,22 +55,12 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://retrotype.c
 			<slot />
 		</main>
 		<Footer />
-		<script>
-			// Netlify Identity: open the recovery modal if the URL contains #recovery_token
-			if (window.netlifyIdentity && window.location.hash.includes('recovery_token')) {
-				window.netlifyIdentity.on('init', function (user) {
-					var token = window.location.hash.match(/recovery_token=(.*)/);
-					if (token && token[1]) {
-						window.netlifyIdentity.setAuthURLs({
-							recovery: window.location.href
-						});
-						window.netlifyIdentity.open('recovery');
-					}
+		<!-- Open recovery modal when URL contains #recovery_token — is:inline so it runs immediately -->
+		<script is:inline>
+			if (window.location.hash.includes('recovery_token')) {
+				window.addEventListener('netlify-identity-init', function () {
+					window.netlifyIdentity.open('recovery');
 				});
-				window.netlifyIdentity.init({ container: 'body' });
-			} else if (window.netlifyIdentity) {
-				window.netlifyIdentity.on('init', function () { });
-				window.netlifyIdentity.init({ container: 'body' });
 			}
 		</script>
 	</body>
