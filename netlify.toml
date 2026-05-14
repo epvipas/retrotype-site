@@ -3,7 +3,8 @@
   publish  = "dist"
 
 [build.environment]
-  NODE_VERSION = "20"
+  # Astro 6 requires Node >= 22.12.0
+  NODE_VERSION = "22.12.0"
 
 # Long-cache static assets that have hashed filenames; keep HTML un-cached
 # so the owner sees content edits immediately after a deploy.
